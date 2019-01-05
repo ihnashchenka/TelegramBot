@@ -24,6 +24,7 @@ class PostgreSQL:
         return len(result)
 
     def add(self, table, item):
+        self.cursor = self.conn.cursor()
         length = len(item)
         str = ''
         for i in range(length):
@@ -38,3 +39,7 @@ class PostgreSQL:
         self.cursor.close()
         self.conn.commit()
 
+    def delete_all(self, table):
+        self.cursor.execute("""DELETE FROM """ + table + """;""")
+        self.cursor.close()
+        self.conn.commit()

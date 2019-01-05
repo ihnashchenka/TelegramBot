@@ -1,4 +1,4 @@
-token = '541495889:AAGQNzAyufG24u_b7Ksr9O9f8-jUEqyuudc'
+token = '572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8'
 
 database_name = 'music'
 shelve_name = 'music\shelve.db'

@@ -4,13 +4,16 @@ from random import shuffle
 from Game import Game
 import utils
 from PostgreSQL import PostgreSQL
+import os
+import time
 
 
 bot = telebot.TeleBot(config.token)
-bot.set_webhook(url='https://fathomless-thicket-27571.herokuapp.com/');
+
 
 @bot.message_handler(commands=['game'])
 def play(message):
+    print("ongame")
     new_game = Game(message.from_user.id)
     bot.send_message(message.chat.id, 'User ' + message.from_user.first_name + ' has started the game')
     bot.send_voice(message.chat.id, new_game.get_song())
@@ -40,13 +43,18 @@ def answer_to_all(message):
     else:
         bot.send_message(message.chat.id, "hi")
 
-'''
-@bot.message_handler(func=lambda message: True, content_types=['text'])
-def answer_to_all(message):
-    db = PostgreSQL(config.database_name)
-    item = db.select_all('users')
-    bot.send_message(message.chat.id, item[:])
-'''
+
 if __name__ == '__main__':
     state = "ckeck"
+    db = PostgreSQL(config.database_name)
+    print(db.select_all("music"))
+    print(db.select_all("users"))
     bot.polling(none_stop=True)
+'''
+@bot.message_handler(content_types=["text"])
+def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
+    bot.send_message(message.chat.id, message.text)
+
+if __name__ == '__main__':
+     bot.polling(none_stop=True)
+'''
