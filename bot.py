@@ -49,12 +49,12 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-def app():
-    if __name__ == '__main__':
-        print('start')
-        bot.remove_webhook()
-        bot.set_webhook(url="https://fathomless-thicket-27571.herokuapp.com/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8")
-        server.run(host="0.0.0.0", port=os.environ.get('PORT', 8443))
+
+if __name__ == '__main__':
+    print('start')
+    bot.remove_webhook()
+    bot.set_webhook(url="https://fathomless-thicket-27571.herokuapp.com/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8")
+    server.run(host="0.0.0.0", port=os.environ.get('PORT', 8443))
   #  return "!", 200
 
 '''
