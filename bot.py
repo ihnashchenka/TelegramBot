@@ -5,11 +5,12 @@ from Game import Game
 import utils
 from PostgreSQL import PostgreSQL
 import os
+from flask import Flask, request
 import time
 
 
 bot = telebot.TeleBot(config.token)
-
+server = Flask(__name__)
 
 @bot.message_handler(commands=['game'])
 def play(message):
@@ -43,14 +44,28 @@ def answer_to_all(message):
     else:
         bot.send_message(message.chat.id, "hi")
 
+@server.route("/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8", methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+    return "!", 200
 
+@server.route("/")
+def webhook():
+    print('start')
+    bot.remove_webhook()
+    bot.set_webhook(url="https://fathomless-thicket-27571.herokuapp.com/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8")
+    return "!", 200
+
+server.run(host="0.0.0.0", port=os.environ.get('PORT', 5000))
+
+'''
 if __name__ == '__main__':
     state = "ckeck"
     db = PostgreSQL(config.database_name)
     print(db.select_all("music"))
     print(db.select_all("users"))
     bot.polling(none_stop=True)
-'''
+
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
     bot.send_message(message.chat.id, message.text)
