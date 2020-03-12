@@ -28,7 +28,7 @@ pew==1.1.2
 pickleshare==0.7.4
 pipenv==11.0.1
 prompt-toolkit==1.0.15
-psutil==5.3.1
+psutil==5.6.6
 PuLP==1.6.8
 pydotplus==2.0.2
 Pygments==2.2.0
