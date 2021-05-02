@@ -27,7 +27,7 @@ PuLP==1.6.8
 pydotplus==2.0.2
 Pygments==2.2.0
 pyparsing==2.2.0
-pyTelegramBotAPI==3.5.2
+pyTelegramBotAPI==3.7.7
 psycopg2==2.8.6
 py-postgresql==1.2.1
 python-dateutil==2.6.1
