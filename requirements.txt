@@ -25,7 +25,7 @@ prompt-toolkit==1.0.15
 psutil==5.3.1
 PuLP==1.6.8
 pydotplus==2.0.2
-Pygments==2.2.0
+Pygments==2.7.4
 pyparsing==2.2.0
 pyTelegramBotAPI==3.7.7
 psycopg2==2.8.6
