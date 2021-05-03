@@ -11,10 +11,6 @@ py-postgresql==1.2.1
 python-dateutil==2.6.1
 pytz==2017.3
 requests==2.18.4
-terminado==0.8.1
-testpath==0.3.1
-tornado==5.0
-traitlets==4.3.2
 urllib3==1.22
 virtualenv==15.1.0
 virtualenv-clone==0.3.0
