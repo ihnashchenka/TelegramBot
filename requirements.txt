@@ -1,6 +1,4 @@
 pyTelegramBotAPI==3.7.7
 psycopg2==2.8.6
 py-postgresql==1.2.1
-requests==2.18.4
-urllib3==1.22
 Flask==1.0.2
