@@ -49,26 +49,28 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-
+'''
 if __name__ == '__main__':
     print('start')
     bot.remove_webhook()
     bot.set_webhook(url="https://fathomless-thicket-27571.herokuapp.com/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8")
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 8443))
   #  return "!", 200
-
 '''
+
 if __name__ == '__main__':
     state = "ckeck"
+    bot.remove_webhook()
     db = PostgreSQL(config.database_name)
     print(db.select_all("music"))
     print(db.select_all("users"))
     bot.polling(none_stop=True)
-
+'''
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
     bot.send_message(message.chat.id, message.text)
-
+    
+    
 if __name__ == '__main__':
      bot.polling(none_stop=True)
 '''
