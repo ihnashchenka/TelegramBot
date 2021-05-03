@@ -1,20 +1,21 @@
 import config
 import telebot
+import logging
 from random import shuffle
 from Game import Game
 import utils
-from PostgreSQL import PostgreSQL
 import os
 from flask import Flask, request
-import time
+import sys
 
 
 bot = telebot.TeleBot(config.token)
 server = Flask(__name__)
+logging.basicConfig(stream=sys.stdout, level=logging.INFO,  format='%(levelname)s - %(message)s')
 
 @bot.message_handler(commands=['game'])
 def play(message):
-    print("ongame")
+    logging.info('Starting a game')
     new_game = Game(message.from_user.id)
     bot.send_message(message.chat.id, 'User ' + message.from_user.first_name + ' has started the game')
     bot.send_voice(message.chat.id, new_game.get_song())
@@ -42,30 +43,28 @@ def answer_to_all(message):
                    #      reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
         cur_game.finish()
     else:
+        logging.info('Text received from a user without active game')
         bot.send_message(message.chat.id, "hi")
 
-@server.route("/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8", methods=['POST'])
+@server.route('/'+config.token, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
-
+'''
 
 if __name__ == '__main__':
-    print('start')
     bot.remove_webhook()
-    bot.set_webhook(url="https://fathomless-thicket-27571.herokuapp.com/572372007:AAGM0l1TxBwuT3RR6WIClR3uOyl47ntSKl8")
+    bot.set_webhook(url=config.webhook_url)
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 8443))
-  #  return "!", 200
+    logging.info('GuessMu 3.0 bot started')
 '''
 
 if __name__ == '__main__':
-    state = "ckeck"
     bot.remove_webhook()
-    db = PostgreSQL(config.database_name)
-    print(db.select_all("music"))
-    print(db.select_all("users"))
+    logging.info('GuessMu 3.0 bot started in pooling state')
     bot.polling(none_stop=True)
-'''
+
+
 '''
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе

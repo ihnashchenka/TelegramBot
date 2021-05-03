@@ -1,6 +1,7 @@
 from PostgreSQL import PostgreSQL
 import config
 import random
+import logging
 
 class Game:
     def __init__(self, user_id):
@@ -9,6 +10,8 @@ class Game:
         user = db.select_single('users', user_id)
 
         if not user:
+            logging.info('User doesn\'t have active games')
+
             song_id = random.randint(1, db.count_rows('music'))
             song = db.select_single('music', song_id)
             item = list(song)[1:]
