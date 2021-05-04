@@ -25,7 +25,7 @@ def play(message):
     new_game = Game(message.from_user.id)
     bot.send_message(message.chat.id, 'User ' + message.from_user.first_name + ' has started the game')
     bot.send_voice(message.chat.id, new_game.get_song())
-    markup = telebot.types.ReplyKeyboardMarkup(one_time_keyboard=True, resize_keyboard=True,selective=True)
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True,selective=True)
     options = new_game.get_answers()
     shuffle(options)
     for item in options:
@@ -41,7 +41,8 @@ def help(message):
 @bot.message_handler(commands=['hide'])
 def hide_answers(message):
     logging.info('Hiding a keyboard')
-    bot.reply_markup=telebot.types.ReplyKeyboardRemove(selective=True)
+    bot.send_message(message.chat.id, text='Removing the keyboard...',
+                    reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
@@ -49,14 +50,11 @@ def answer_to_all(message):
     if utils.is_in_game(message.from_user.id):
         cur_game = Game(message.from_user.id)
         if message.text == cur_game.get_right_answer():
-            bot.send_message(message.chat.id, text=message.from_user.first_name + ", you are right!!!")
-            #some other way to hide keyboard
-            #bot.reply_to(message, text=message.from_user.first_name + ", you are right!!!",
-                   #      reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+            bot.send_message(message.chat.id, text=message.from_user.first_name + ", you are right!!!",
+                             reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
         else:
-            bot.send_message(message.chat.id, text=message.from_user.first_name + ",sorry, you are wrong(((")
-           #bot.reply_to(message, text=message.from_user.first_name + ",sorry, you are wrong(((",
-                   #      reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+            bot.send_message(message.chat.id, text=message.from_user.first_name + ",sorry, you are wrong(((",
+                             reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
         cur_game.finish()
     else:
         logging.info('Text received from a user without active game')
@@ -67,7 +65,7 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-
+'''
 if __name__ == '__main__':
     bot.remove_webhook()
     bot.set_webhook(url=config.webhook_url)
@@ -77,10 +75,10 @@ if __name__ == '__main__':
 
 if __name__ == '__main__':
     bot.remove_webhook()
-    logging.info('GuessMu 3.0 bot started in pooling state')
+    logging.info('GuessMu 3.0 bot started in polling state')
     bot.polling(none_stop=True)
 
-'''
+
 '''
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
