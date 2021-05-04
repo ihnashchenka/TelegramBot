@@ -26,7 +26,7 @@ def play(message):
         markup.row(item)
     bot.reply_to(message, text=message.from_user.first_name + " please, choose the option",
                      reply_markup=markup)
-
+     
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def answer_to_all(message):
