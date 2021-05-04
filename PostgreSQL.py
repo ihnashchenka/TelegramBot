@@ -48,3 +48,11 @@ class PostgreSQL:
         self.cursor.execute("""DELETE FROM """ + table + """;""")
         self.cursor.close()
         self.conn.commit()
+
+    def exec_select(self, sql):
+        self.cursor.execute(sql)
+        res = self.cursor.fetchall()
+        self.cursor.close()
+        self.conn.commit()
+        return res
+

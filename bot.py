@@ -33,6 +33,17 @@ def play(message):
     bot.reply_to(message, text=message.from_user.first_name + " please, choose the option",
                      reply_markup=markup)
 
+@bot.message_handler(commands=['end_game'])
+def end_game(message):
+    logging.info('Finishing a game')
+    if Game.hasGame(message.from_user.id):
+        curr_game = Game(message.from_user.id)
+        curr_game.finish()
+        bot.send_message(message.chat.id, text=config.game_stopped,
+                 reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+    else:
+        bot.send_message(message.chat.id, text=config.no_game_to_stop)
+
 @bot.message_handler(commands=['help'])
 def help(message):
     logging.info('Providing help')

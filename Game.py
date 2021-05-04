@@ -39,3 +39,11 @@ class Game:
     def finish(self):
         db = PostgreSQL(config.database_name)
         db.delete_single('users', self.__user)
+
+    @staticmethod
+    def hasGame(user_id):
+        logging.info('Checking if there is any game for user '+ str(user_id))
+        db = PostgreSQL(config.database_name)
+        count = db.exec_select("SELECT COUNT(*) FROM users WHERE id='"+ str(user_id)+"';")[0][0]
+        print(count)
+        return True if count > 0 else False

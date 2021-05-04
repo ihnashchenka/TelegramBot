@@ -16,7 +16,12 @@ hello_msg = "Hi! I am GuessMu 3.0 bot. I am here to play 'Guess the Melody' game
 
 list_of_commands = "Here is commands know: \n /hello - just a few words about me" \
                    "\n/game - choose to start or continue a game" \
+                   "\n/end_game - terminate ongoing game" \
                    "\n/hide - hide keyboard with answers if you have one" \
                    "\n/help - list of commands I understand"
 
 default_msg = "I don't know yet what does it mean. Please use /help to see available commands."
+
+game_stopped="Your game was stopped. Start a new one using /game command."
+
+no_game_to_stop="Looks like you have no active game... You can start one using /game command."
