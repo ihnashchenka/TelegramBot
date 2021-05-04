@@ -13,6 +13,12 @@ bot = telebot.TeleBot(config.token)
 server = Flask(__name__)
 logging.basicConfig(stream=sys.stdout, level=logging.INFO,  format='%(levelname)s - %(message)s')
 
+@bot.message_handler(commands=['hello'])
+def help(message):
+    logging.info('Saying hi!')
+    bot.send_message(message.chat.id, config.hello_msg)
+
+
 @bot.message_handler(commands=['game'])
 def play(message):
     logging.info('Starting a game')
@@ -26,7 +32,13 @@ def play(message):
         markup.row(item)
     bot.reply_to(message, text=message.from_user.first_name + " please, choose the option",
                      reply_markup=markup)
-     
+
+@bot.message_handler(commands=['help'])
+def help(message):
+    logging.info('Providing help')
+    bot.send_message(message.chat.id, config.list_of_commands)
+
+
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def answer_to_all(message):
@@ -44,7 +56,7 @@ def answer_to_all(message):
         cur_game.finish()
     else:
         logging.info('Text received from a user without active game')
-        bot.send_message(message.chat.id, "hi")
+        bot.send_message(message.chat.id, config.default_msg)
 
 @server.route('/'+config.token, methods=['POST'])
 def getMessage():
