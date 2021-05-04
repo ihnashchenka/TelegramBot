@@ -14,8 +14,9 @@ webhook_url="https://fathomless-thicket-27571.herokuapp.com/572372007:AAGM0l1TxB
 
 hello_msg = "Hi! I am GuessMu 3.0 bot. I am here to play 'Guess the Melody' game with you. To start send \\game to me. Use \\help command to see more options."
 
-list_of_commands = "Here is commands know: \n \\hello - just a few words about me" \
-                   " \n \\game - choose to start or continue a game" \
-                   "\n \\help - list of commands I understand"
+list_of_commands = "Here is commands know: \n /hello - just a few words about me" \
+                   "\n/game - choose to start or continue a game" \
+                   "\n/hide - hide keyboard with answers if you have one" \
+                   "\n/help - list of commands I understand"
 
-default_msg = "I don't know yet what does it mean. Please use \\help to see available commands."
+default_msg = "I don't know yet what does it mean. Please use /help to see available commands."

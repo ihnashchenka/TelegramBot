@@ -38,6 +38,10 @@ def help(message):
     logging.info('Providing help')
     bot.send_message(message.chat.id, config.list_of_commands)
 
+@bot.message_handler(commands=['hide'])
+def hide_answers(message):
+    logging.info('Hiding a keyboard')
+    bot.reply_markup=telebot.types.ReplyKeyboardRemove(selective=True)
 
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
