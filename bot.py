@@ -76,7 +76,7 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-'''
+
 if __name__ == '__main__':
     bot.remove_webhook()
     bot.set_webhook(url=config.webhook_url)
@@ -89,7 +89,7 @@ if __name__ == '__main__':
     logging.info('GuessMu 3.0 bot started in polling state')
     bot.polling(none_stop=True)
 
-
+'''
 '''
 @bot.message_handler(content_types=["text"])
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
