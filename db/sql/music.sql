@@ -4,25 +4,10 @@
 
 CREATE TABLE public.music
 (
-    id integer NOT NULL,
-    file_id text COLLATE pg_catalog."default" NOT NULL,
-    right_answer text COLLATE pg_catalog."default" NOT NULL,
-    wrong_answer text COLLATE pg_catalog."default" NOT NULL,
-    CONSTRAINT music_pkey PRIMARY KEY (id)
+    "ID" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 0 MINVALUE 0 MAXVALUE 2147483647 CACHE 1 ),
+    "FILE_ID" text COLLATE pg_catalog."default" NOT NULL,
+    "NAME" text COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT music_pkey PRIMARY KEY ("ID")
 )
-WITH (
-    OIDS = FALSE
-)
+
 TABLESPACE pg_default;
-
-ALTER TABLE public.music
-    OWNER to tsbgxbxm;
-
-
--- Constraint: music_pkey
-
--- ALTER TABLE public.music DROP CONSTRAINT music_pkey;
-
-ALTER TABLE public.music
-    ADD CONSTRAINT music_pkey PRIMARY KEY (id);
-
