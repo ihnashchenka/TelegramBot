@@ -36,12 +36,12 @@ class PostgreSQL:
             str = str + "%s, "
         str = str[:-2]
         self.cursor.execute("INSERT INTO " + table + "(id, file_id, right_answer, wrong_answer) VALUES(" + str + ")", (item))
-        self.cursor.close()
+       # self.cursor.close()
         self.conn.commit()
 
     def delete_single(self, table, rownum):
         self.cursor.execute("""DELETE FROM """ + table + """ WHERE id='%s'""", (rownum,))
-        self.cursor.close()
+      #  self.cursor.close()
         self.conn.commit()
 
     def delete_all(self, table):
@@ -49,23 +49,16 @@ class PostgreSQL:
         self.cursor.close()
         self.conn.commit()
 
-    def exec_select(self, sql):
-        self.cursor.execute(sql)
+    def exec_select(self, sql,parms):
+        self.cursor.execute(sql,parms)
         res = self.cursor.fetchall()
         self.conn.commit()
         return res
 
-    def exec_insert(self,sql):
-        try:
-            self.cursor.execute(sql)
+#todo describe how parms must be passed here
+    def exec_insert(self,sql,parms):
+            self.cursor.execute(sql,parms)
             self.conn.commit()
-            r = self.cursor.fetchall()
-            print("return code for insert: ")
-            print(r)
-            return r
-        except Exception as err:
-            logging.error("Exception while exec_insert:", exc_info=True)
-            return err.pgcode
 
     def close(self):
         self.conn.cursor.close()

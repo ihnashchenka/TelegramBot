@@ -25,3 +25,5 @@ default_msg = "I don't know yet what does it mean. Please use /help to see avail
 game_stopped="Your game was stopped. Start a new one using /game command."
 
 no_game_to_stop="Looks like you have no active game... You can start one using /game command."
+
+internalError="Something went wrong. Please, try again."

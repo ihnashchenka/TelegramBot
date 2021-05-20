@@ -1,11 +1,7 @@
-from utils.PostgreSQL import PostgreSQL
-import config
 import random
 import logging
 from utils import music
 from objects.Song import Song
-from objects.User import User
-import json
 
 
 class Game:

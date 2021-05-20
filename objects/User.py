@@ -1,5 +1,3 @@
-from utils.PostgreSQL import PostgreSQL
-import config
 import logging
 
 class User:

@@ -1,4 +1,4 @@
-from PostgreSQL import PostgreSQL
+from utils.PostgreSQL import PostgreSQL
 import config
 
 

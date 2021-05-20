@@ -1,5 +1,5 @@
 import logging
-from utils.PostgreSQL import PostgreSQL
+
 class Song:
     #id
     #file_id
