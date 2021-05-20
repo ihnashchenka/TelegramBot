@@ -4,6 +4,7 @@ import logging
 from objects.Game import Game
 from flask import Flask, request
 import sys
+import os
 from objects.User import User
 from utils.PostgreSQL import PostgreSQL
 
