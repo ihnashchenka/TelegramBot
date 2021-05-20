@@ -4,10 +4,10 @@
 
 CREATE TABLE public.users
 (
-    "ID" integer NOT NULL,
+    "U_ID" integer NOT NULL,
     "WIN_COUNT" integer NOT NULL DEFAULT 0,
     "GAME_COUNT" integer NOT NULL DEFAULT 0,
-    CONSTRAINT "USER_ID" PRIMARY KEY ("ID")
+    CONSTRAINT "USER_ID" PRIMARY KEY ("U_ID")
 )
 
 TABLESPACE pg_default;
