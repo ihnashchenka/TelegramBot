@@ -1,23 +1,22 @@
 import config
 import telebot
 import logging
-from objects.Game import Game
-from flask import Flask, request
 import sys
 import os
+from flask import Flask, request
+from objects.Game import Game
 from objects.User import User
 from utils.PostgreSQL import PostgreSQL
 
 bot = telebot.TeleBot(config.token)
 server = Flask(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(levelname)s - %(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
 
 
 @bot.message_handler(commands=['hello'])
 def hello(message):
     logging.info('Saying hi!')
     bot.send_message(message.chat.id, config.hello_msg)
-
 
 @bot.message_handler(commands=['game'])
 def play(message):
@@ -93,6 +92,7 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
+'''
 if __name__ == '__main__':
     try:
         bot.remove_webhook()
@@ -103,10 +103,10 @@ if __name__ == '__main__':
         logging.fatal("Exception in __main__ !",exc_info=True)
 
 '''
-
+###local debug function
 if __name__ == '__main__':
     try:
-        # bot.remove_webhook()
+        bot.remove_webhook()
         logging.info('GuessMu 3.0 bot started in polling state')
         bot.polling(none_stop=True)
     except:
@@ -117,7 +117,7 @@ if __name__ == '__main__':
 def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
     bot.send_message(message.chat.id, message.text)
     
-'''
+
 if __name__ == '__main__':
      bot.polling(none_stop=True)
 '''
