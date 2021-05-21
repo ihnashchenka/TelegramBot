@@ -2,7 +2,6 @@ import config
 import telebot
 import logging
 import sys
-import os
 from flask import Flask, request
 from objects.Game import Game
 from objects.User import User
@@ -43,17 +42,23 @@ def play(message):
 
 @bot.message_handler(commands=['end_game'])
 def end_game(message):
-    logging.info('Finishing a game')
-    db = PostgreSQL(config.database_name)
-    user = User(message.from_user.id, db)
-    if user.isInGame(db):
-        curr_game = Game(user, db)
-        curr_game.finish(db)
-        bot.send_message(message.chat.id, text=config.game_stopped,
+    try:
+        logging.info('Finishing a game')
+        db = PostgreSQL(config.database_name)
+        user = User(message.from_user.id, db)
+        if user.isInGame(db):
+            curr_game = Game(user, db)
+            curr_game.finish(db)
+            bot.send_message(message.chat.id, text=config.game_stopped,
                          reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
-    else:
-        bot.send_message(message.chat.id, text=config.no_game_to_stop)
-    db.close()
+        else:
+            bot.send_message(message.chat.id, text=config.no_game_to_stop)
+        db.close()
+    except:
+        bot.send_message(message.chat.id, text=config.internalError,
+                         reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+        logging.error("Commend /game failed with internalError: ", exc_info=True)
+
 
 
 @bot.message_handler(commands=['help'])
