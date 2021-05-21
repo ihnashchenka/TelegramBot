@@ -33,10 +33,12 @@ def play(message):
             markup.row(item)
         bot.reply_to(message, text=message.from_user.first_name + " please, choose the option",
                      reply_markup=markup)
+        db.close()
     except:
         bot.send_message(message.chat.id, text=config.internalError,
                          reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
         logging.error("Commend /game failed with internalError: ", exc_info=True)
+
 
 
 @bot.message_handler(commands=['end_game'])
@@ -51,6 +53,7 @@ def end_game(message):
                          reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
     else:
         bot.send_message(message.chat.id, text=config.no_game_to_stop)
+    db.close()
 
 
 @bot.message_handler(commands=['help'])
@@ -85,6 +88,7 @@ def answer_to_all(message):
     else:
         logging.info('Text received from a user without active game')
         bot.send_message(message.chat.id, config.default_msg)
+    db.close()
 
 
 @server.route('/' + config.token, methods=['POST'])
@@ -112,12 +116,3 @@ if __name__ == '__main__':
     except:
         logging.fatal("Exception in __main__ !",exc_info=True)
 
-'''
-@bot.message_handler(content_types=["text"])
-def repeat_all_messages(message): # Название функции не играет никакой роли, в принципе
-    bot.send_message(message.chat.id, message.text)
-    
-
-if __name__ == '__main__':
-     bot.polling(none_stop=True)
-'''
