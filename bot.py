@@ -12,6 +12,14 @@ server = Flask(__name__)
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
 
 
+def prepareMarkupKeybord(game):
+    markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
+    options = game.get_answers()
+    for item in options:
+        markup.row(item)
+    return markup
+
+
 @bot.message_handler(commands=['hello'])
 def hello(message):
     logging.info('Saying hi!')
@@ -20,23 +28,18 @@ def hello(message):
 @bot.message_handler(commands=['game'])
 def play(message):
     try:
+        logging.info('Game command received')
         db = PostgreSQL(config.database_name)
-        logging.info('Game command received...')
-        #  user = User(message.from_user.id)
         new_game = Game(User(message.from_user.id, db), db)
         bot.send_message(message.chat.id, 'User ' + message.from_user.first_name + ' has started the game')
         bot.send_voice(message.chat.id, new_game.get_song_file_id())
-        markup = telebot.types.ReplyKeyboardMarkup(resize_keyboard=True, selective=True)
-        options = new_game.get_answers()
-        for item in options:
-            markup.row(item)
         bot.reply_to(message, text=message.from_user.first_name + " please, choose the option",
-                     reply_markup=markup)
+                     reply_markup=prepareMarkupKeybord(new_game))
         db.close()
     except:
         bot.send_message(message.chat.id, text=config.internalError,
                          reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
-        logging.error("Commend /game failed with internalError: ", exc_info=True)
+        logging.error("Command /game failed with internalError: ", exc_info=True)
 
 
 
@@ -57,7 +60,7 @@ def end_game(message):
     except:
         bot.send_message(message.chat.id, text=config.internalError,
                          reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
-        logging.error("Commend /game failed with internalError: ", exc_info=True)
+        logging.error("Commend /end_game failed with internalError: ", exc_info=True)
 
 
 
@@ -89,6 +92,7 @@ def answer_to_all(message):
         else:
             bot.send_message(message.chat.id, text=message.from_user.first_name + ",sorry, you are wrong(((",
                              reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+            user.addGame(db)
         cur_game.finish(db)
     else:
         logging.info('Text received from a user without active game')

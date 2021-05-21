@@ -86,7 +86,7 @@ class User:
     def addWin(self,db):
         return True
 
-    def addGame(self):
+    def addGame(self,db):
         #add 1 to GAME_COUNT
         return True
 
