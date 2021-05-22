@@ -2,6 +2,7 @@ import config
 import telebot
 import logging
 import sys
+import os
 from flask import Flask, request
 from objects.Game import Game
 from objects.User import User
@@ -94,7 +95,6 @@ def hide_answers(message):
     bot.send_message(message.chat.id, text='Removing the keyboard...',
                      reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
 
-
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def answer_to_all(message):
     db = PostgreSQL(config.database_name)
@@ -119,12 +119,13 @@ def answer_to_all(message):
     db.close()
 
 
+
 @server.route('/' + config.token, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-'''
+
 if __name__ == '__main__':
     try:
         bot.remove_webhook()
@@ -144,3 +145,4 @@ if __name__ == '__main__':
     except:
         logging.fatal("Exception in __main__ !",exc_info=True)
 
+'''

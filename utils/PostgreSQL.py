@@ -19,7 +19,6 @@ class PostgreSQL:
 
     def delete_all(self, table):
         self.cursor.execute("""DELETE FROM """ + table + """;""")
-       # self.cursor.close()
         self.conn.commit()
 
     def exec_select(self, sql,parms):

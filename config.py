@@ -17,7 +17,7 @@ list_of_commands = "Here is commands know: \n /hello - just a few words about me
                    "\n/game - choose to start or continue a game;" \
                    "\n/end_game - terminate ongoing game;" \
                    "\n/hide - hide keyboard with answers if you have one;" \
-                   "\n/game - delete all information about your user from the bot database: "\
+                   "\n/delete_me - delete all information about your user from the bot database: "\
                    "game statistics, active game and the fact that you have ever interact with a bot;"\
                    "\n/help - list of commands I understand;"
 
