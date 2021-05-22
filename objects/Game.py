@@ -1,6 +1,5 @@
 import random
 import logging
-from utils import music
 from objects.Song import Song
 
 
@@ -54,9 +53,9 @@ class Game:
         if not self.__song:
             return None
         #todo do not do intermidiete copies on __answers
-        wrong_answers = music.getRandomNames(self.NUMBER_OF_ANSWERS - 1, self.__song.getId(),db)
+        wrong_answers = Song.getRandomNames(self.NUMBER_OF_ANSWERS - 1, self.__song.getId(),db)
         wrong_answers.append(self.__song.getName())
-        self.__answers = wrong_answers
+        self.__answers = random.shuffle(wrong_answers)
         logging.debug("Answers generated for a new game:")
         logging.debug("answers=" + str(self.__answers))
         self.save(db)
