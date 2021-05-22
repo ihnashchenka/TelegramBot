@@ -10,7 +10,7 @@ from utils.PostgreSQL import PostgreSQL
 
 bot = telebot.TeleBot(config.token)
 server = Flask(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(levelname)s - %(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
 
 
 def prepareMarkupKeybord(game):
