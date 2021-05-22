@@ -78,7 +78,7 @@ def delete_user(message):
         except:
             bot.send_message(message.chat.id, text=config.internalError,
                              reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
-            logging.error("Command /end_game failed with internalError: ", exc_info=True)
+            logging.error("Command /delete_me failed with internalError: ", exc_info=True)
 
 
 
