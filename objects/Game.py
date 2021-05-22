@@ -13,7 +13,7 @@ class Game:
 
     def save(self, db):
         try:
-            db.exec_insert("""INSERT INTO games("USER_ID","MUSIC_ID","ANSWERS") VALUES(%s, %s, %s)""", (self.__user.getId(), self.__song.getId(), self.__answers,))
+            db.exec_update("""INSERT INTO games("USER_ID","MUSIC_ID","ANSWERS") VALUES(%s, %s, %s)""", (self.__user.getId(), self.__song.getId(), self.__answers,))
         except:
             logging.error("Can't save a game!",exc_info=True)
             return False
@@ -55,7 +55,8 @@ class Game:
         #todo do not do intermidiete copies on __answers
         wrong_answers = Song.getRandomNames(self.NUMBER_OF_ANSWERS - 1, self.__song.getId(),db)
         wrong_answers.append(self.__song.getName())
-        self.__answers = random.shuffle(wrong_answers)
+        random.shuffle(wrong_answers)
+        self.__answers = wrong_answers
         logging.debug("Answers generated for a new game:")
         logging.debug("answers=" + str(self.__answers))
         self.save(db)
@@ -82,7 +83,7 @@ class Game:
 
     def finish(self,db):
         try:
-            db.exec_insert("""DELETE FROM games WHERE "G_ID"=%s;""",(self.__id,))
+            db.exec_update("""DELETE FROM games WHERE "G_ID"=%s;""", (self.__id,))
             return True
         except:
             logging.error("Can't finish the game!",exc_info=True)

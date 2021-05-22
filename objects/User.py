@@ -1,5 +1,6 @@
 import logging
 
+
 class User:
     # id
     # new
@@ -11,7 +12,7 @@ class User:
         self.__new = None
         self.__win_count = None
         self.__game_count = None
-        if self.exists(db):
+        if User.exists(user_id,db):
             self.get(db)
         else:
             self.add(db)
@@ -19,9 +20,10 @@ class User:
     def getId(self):
         return self.__id
 
-    def exists(self, db):
+    @staticmethod
+    def exists(id,db):
         logging.info("Checking if user is registered...")
-        count = db.exec_select("""SELECT COUNT(*) FROM users WHERE "U_ID"=%s;""", (self.__id,))[0][0]
+        count = db.exec_select("""SELECT COUNT(*) FROM users WHERE "U_ID"=%s;""", (id,))[0][0]
         logging.debug("Count users with provided id=" + str(count))
         if count > 0:
             logging.info("User is registered.")
@@ -33,9 +35,9 @@ class User:
     def add(self, db):
         logging.info("Registering a new user...")
         try:
-            db.exec_insert("""INSERT INTO users VALUES('%s');""", (self.__id,))
+            db.exec_update("""INSERT INTO users VALUES('%s');""", (self.__id,))
         except:
-            logging.error("Can't regester a user!", exc_info=True)
+            logging.error("Can't register a user!", exc_info=True)
             return None
         self.__new = True
         self.__win_count = 0
@@ -58,8 +60,8 @@ class User:
         logging.info("User extracted.")
 
     def isNew(self):
-        if self.__new:             # once user was checked to be new, the program knew about it at least once
-            self.__new = False     # this means that it can't be considered as new any more
+        if self.__new:  # once user was checked to be new, the program knew about it at least once
+            self.__new = False  # this means that it can't be considered as new any more
             return True
         else:
             return False
@@ -80,9 +82,21 @@ class User:
             return False
 
     def addWin(self, db):
-        #todo add 1 to users.WIN_COUNT and users.GAME_COUNT
+        # todo add 1 to users.WIN_COUNT and users.GAME_COUNT
         return True
 
     def addGame(self, db):
-        #todo add 1 to users.GAME_COUNT
+        # todo add 1 to users.GAME_COUNT
         return True
+
+    # unit1- user have active game
+    # unit2 - user have no active game
+    # unit3 - user is not registered
+    def delete(self, db):
+        try:
+            db.exec_update("""DELETE FROM games WHERE "USER_ID"=%s;""", (self.__id,))
+            db.exec_update("""DELETE FROM users WHERE "U_ID"=%s;""", (self.__id,))
+            return True
+        except:
+            logging.error("Can't check whether a user have an active game!", exc_info=True)
+            return False

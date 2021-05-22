@@ -29,7 +29,7 @@ class PostgreSQL:
         return res
 
 #todo describe how parms must be passed here
-    def exec_insert(self,sql,parms):
+    def exec_update(self, sql, parms):
         self.cursor.execute(sql,parms)
         self.conn.commit()
 

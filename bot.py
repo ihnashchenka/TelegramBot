@@ -9,7 +9,7 @@ from utils.PostgreSQL import PostgreSQL
 
 bot = telebot.TeleBot(config.token)
 server = Flask(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(levelname)s - %(message)s')
 
 
 def prepareMarkupKeybord(game):
@@ -60,7 +60,25 @@ def end_game(message):
     except:
         bot.send_message(message.chat.id, text=config.internalError,
                          reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
-        logging.error("Commend /end_game failed with internalError: ", exc_info=True)
+        logging.error("Command /end_game failed with internalError: ", exc_info=True)
+
+@bot.message_handler(commands=['delete_me'])
+def delete_user(message):
+        try:
+            logging.info('Deleting a user')
+            db = PostgreSQL(config.database_name)
+            if not User.exists(message.chat.id,db):
+                bot.send_message(message.chat.id, text=config.already_deleted)
+                return True
+            user = User(message.from_user.id, db)
+            if user.delete(db):
+                bot.send_message(message.chat.id, text=config.user_deleted,
+                                 reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+            db.close()
+        except:
+            bot.send_message(message.chat.id, text=config.internalError,
+                             reply_markup=telebot.types.ReplyKeyboardRemove(selective=True))
+            logging.error("Command /end_game failed with internalError: ", exc_info=True)
 
 
 
@@ -83,6 +101,7 @@ def answer_to_all(message):
     user = User(message.from_user.id, db)
     if user.isNew():
         hello(message)
+        return
     if user.isInGame(db):
         cur_game = Game(user, db)
         if message.text == cur_game.get_right_answer():
