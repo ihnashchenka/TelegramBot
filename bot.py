@@ -125,7 +125,7 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-
+'''
 if __name__ == '__main__':
     try:
         bot.remove_webhook()
@@ -145,4 +145,3 @@ if __name__ == '__main__':
     except:
         logging.fatal("Exception in __main__ !",exc_info=True)
 
-'''
