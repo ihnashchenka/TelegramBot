@@ -8,9 +8,10 @@ from objects.Game import Game
 from objects.User import User
 from utils.PostgreSQL import PostgreSQL
 
+
 bot = telebot.TeleBot(config.token)
 server = Flask(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format='%(levelname)s - %(message)s')
 
 
 def prepareMarkupKeybord(game):
@@ -125,7 +126,7 @@ def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
 
-'''
+
 if __name__ == '__main__':
     try:
         bot.remove_webhook()
@@ -145,3 +146,4 @@ if __name__ == '__main__':
     except:
         logging.fatal("Exception in __main__ !",exc_info=True)
 
+'''

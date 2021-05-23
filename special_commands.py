@@ -17,26 +17,27 @@ from utils.PostgreSQL import PostgreSQL
 import config
 import logging
 
-
 @bot.message_handler(commands=['create'])
 def find_file_ids(message):
     db = PostgreSQL(config.database_name)
     for file in os.listdir('music'):
         if file.split('.')[-1] == 'ogg':
             f = open('music/' + file, 'rb')
-            msg = bot.send_voice(message.chat.__id, f, None)
+            msg = bot.send_voice(message.chat.id, f, None)
             add_music_to_db(db, msg.voice.file_id, file.split('.')[0])
-            bot.send_message(message.chat.__id, msg.voice.file_id, reply_to_message_id=msg.message_id)
+            bot.send_message(message.chat.id, msg.voice.file_id, reply_to_message_id=msg.message_id)
         time.sleep(3)
     db.close()
 
 
 def add_music_to_db(db, file_id, name):
     try:
-        db.exec_update("""INSERT INTO music("FILE_ID", "NAME") VALUES(%s,%s,%s);""", (file_id, name,))
+        db.exec_update("""INSERT INTO music("M_ID","FILE_ID", "NAME") VALUES(nextval('music_seq'),%s,%s);""", (file_id, name,))
         logging.info("Song added: " + str(file_id) + " name: " + str(name))
     except:
-        logging.error("Can't insert song: " + str(file_id) + " name: " + str(name))
+        logging.error("Can't insert song: " + str(file_id) + " name: " + str(name),exc_info=True)
+
+
 
     '''
     db.add("music","1,AwADAgADQgMAAoFAiUmmd8BB8bzTJgI, The Police - Every breth you take,"
