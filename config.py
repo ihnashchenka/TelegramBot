@@ -1,3 +1,5 @@
+#database_name='d9bsan98ui4ua8'
+
 # messages
 hello_msg = "Hi! I am GuessMu 3.0 bot. I am here to play 'Guess the Melody' game with you." \
             "Send /game to me to start. Use /help command to see more options."

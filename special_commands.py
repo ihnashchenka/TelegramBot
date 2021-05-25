@@ -19,7 +19,7 @@ import logging
 
 @bot.message_handler(commands=['create'])
 def find_file_ids(message):
-    db = PostgreSQL(config.database_name)
+    db = PostgreSQL(database_name)
     for file in os.listdir('music'):
         if file.split('.')[-1] == 'ogg':
             f = open('music/' + file, 'rb')

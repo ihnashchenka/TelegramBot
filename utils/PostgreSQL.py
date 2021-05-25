@@ -1,10 +1,12 @@
 import psycopg2
 import config
 import logging
+import os
 
 class PostgreSQL:
     def __init__(self, database):
         try:
+            postgre_conn_string = os.getenv('DB_CONNECTION', '')
             self.conn = psycopg2.connect(config.postgre_conn_string)
         except Exception as e:
             logging.error('Connection to db failed')
