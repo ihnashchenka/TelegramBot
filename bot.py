@@ -7,9 +7,12 @@ from flask import Flask, request
 from objects.Game import Game
 from objects.User import User
 from utils.PostgreSQL import PostgreSQL
+from dotenv import load_dotenv
 
+load_dotenv()
 token = os.getenv('TELEGRAM_TOKEN', '')
 webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
+postgre_conn_string=os.getenv('DB_CONNECTION', '')
 
 bot = telebot.TeleBot(token)
 server = Flask(__name__)
