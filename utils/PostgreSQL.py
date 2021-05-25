@@ -7,7 +7,7 @@ class PostgreSQL:
     def __init__(self, database):
         try:
             postgre_conn_string = os.getenv('DB_CONNECTION', '')
-            self.conn = psycopg2.connect(config.postgre_conn_string)
+            self.conn = psycopg2.connect(postgre_conn_string)
         except Exception as e:
             logging.error('Connection to db failed')
             logging.error('Exception occurred', exc_info=True)
