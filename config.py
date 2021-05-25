@@ -2,7 +2,7 @@
 database_name = 'd9bsan98ui4ua8'
 
 
-webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
+
 
 # messages
 hello_msg = "Hi! I am GuessMu 3.0 bot. I am here to play 'Guess the Melody' game with you." \

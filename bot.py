@@ -8,8 +8,10 @@ from objects.Game import Game
 from objects.User import User
 from utils.PostgreSQL import PostgreSQL
 
+token = os.getenv('TELEGRAM_TOKEN', '')
+webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
 
-bot = telebot.TeleBot(config.token)
+bot = telebot.TeleBot(token)
 server = Flask(__name__)
 logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
 
@@ -121,7 +123,7 @@ def answer_to_all(message):
 
 
 
-@server.route('/' + config.token, methods=['POST'])
+@server.route('/' + token, methods=['POST'])
 def getMessage():
     bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
     return "!", 200
@@ -130,7 +132,7 @@ def getMessage():
 if __name__ == '__main__':
     try:
         bot.remove_webhook()
-        bot.set_webhook(url=config.webhook_url)
+        bot.set_webhook(url=webhook_url)
         server.run(host="0.0.0.0", port=os.environ.get('PORT', 8443))
         logging.info('GuessMu 3.0 bot started')
     except:
