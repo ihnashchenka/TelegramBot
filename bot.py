@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 load_dotenv()
 token = os.getenv('TELEGRAM_TOKEN', '')
 webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
-database_name= os.getenv('DB_NAME', '')
 
 bot = telebot.TeleBot(token)
 server = Flask(__name__)
@@ -36,7 +35,7 @@ def hello(message):
 def play(message):
     try:
         logging.info('Game command received')
-        db = PostgreSQL(database_name)
+        db = PostgreSQL()
         new_game = Game(User(message.from_user.id, db), db)
         bot.send_message(message.chat.id, 'User ' + message.from_user.first_name + ' has started the game')
         bot.send_voice(message.chat.id, new_game.get_song_file_id())
@@ -54,7 +53,7 @@ def play(message):
 def end_game(message):
     try:
         logging.info('Finishing a game')
-        db = PostgreSQL(database_name)
+        db = PostgreSQL()
         user = User(message.from_user.id, db)
         if user.isInGame(db):
             curr_game = Game(user, db)
@@ -73,7 +72,7 @@ def end_game(message):
 def delete_user(message):
         try:
             logging.info('Deleting a user')
-            db = PostgreSQL(database_name)
+            db = PostgreSQL()
             if not User.exists(message.chat.id,db):
                 bot.send_message(message.chat.id, text=config.already_deleted)
                 return True
@@ -103,7 +102,7 @@ def hide_answers(message):
 
 @bot.message_handler(func=lambda message: True, content_types=['text'])
 def answer_to_all(message):
-    db = PostgreSQL(database_name)
+    db = PostgreSQL()
     user = User(message.from_user.id, db)
     if user.isNew():
         hello(message)

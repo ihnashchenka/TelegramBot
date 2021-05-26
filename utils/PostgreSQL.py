@@ -5,7 +5,7 @@ import os
 postgre_conn_string = os.getenv('DATABASE_URL', '')
 
 class PostgreSQL:
-    def __init__(self, database):
+    def __init__(self):
         try:
             self.conn = psycopg2.connect(postgre_conn_string)
         except Exception as e:

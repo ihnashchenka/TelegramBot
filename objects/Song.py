@@ -49,11 +49,3 @@ class Song:
             names.append(new_name)
         logging.debug("Generated set of name=" + str(names))
         return names
-
-
-'''
-    def getSongFileID(song_id):
-        db = PostgreSQL(config.database_name)
-        file_id = db.exec_select("""SELECT "FILE_ID" FROM music WHERE "ID"=%s;""", (song_id,))[0]
-        return file_id
-'''
