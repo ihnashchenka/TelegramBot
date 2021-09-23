@@ -11,11 +11,12 @@ from dotenv import load_dotenv
 
 load_dotenv()
 token = os.getenv('TELEGRAM_TOKEN', '')
+database = os.getenv('DATABASE_URL', '') 
 webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
 
 bot = telebot.TeleBot(token)
 server = Flask(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(acstime)s - %(message)s')
 
 
 def prepareMarkupKeybord(game):
@@ -147,6 +148,10 @@ if __name__ == '__main__':
     try:
        # bot.remove_webhook()
         logging.info('GuessMu 3.0 bot started in polling state')
+        logging.info('token')
+        logging.info(token)
+        logging.info('database')
+        logging.info(database)
         bot.polling(none_stop=True)
     except:
         logging.fatal("Exception in __main__ !",exc_info=True)
