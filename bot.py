@@ -145,7 +145,7 @@ if __name__ == '__main__':
 ###local debug function
 if __name__ == '__main__':
     try:
-        bot.remove_webhook()
+       # bot.remove_webhook()
         logging.info('GuessMu 3.0 bot started in polling state')
         bot.polling(none_stop=True)
     except:
