@@ -16,7 +16,7 @@ webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
 
 bot = telebot.TeleBot(token)
 server = Flask(__name__)
-logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(acstime)s - %(message)s')
+logging.basicConfig(stream=sys.stdout, level=logging.INFO, format='%(levelname)s - %(asctime)s - %(message)s')
 
 
 def prepareMarkupKeybord(game):
