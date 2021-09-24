@@ -132,26 +132,31 @@ def getMessage():
     return "!", 200
 
 
-'''
-if __name__ == '__main__':
+def startWebhookMode():
     try:
         bot.remove_webhook()
         bot.set_webhook(url=webhook_url)
         server.run(host="0.0.0.0", port=os.environ.get('PORT', 8443))
-        logging.info('GuessMu 3.0 bot started')
+        logging.info('GuessMu 3.0 bot started in webhook mode')
     except:
-        logging.fatal("Exception in __main__ !",exc_info=True)
+        logging.fatal("Exception in startWebhookMode!",exc_info=True)
 
-'''
-###local debug function
+
+def startPollingMode():
+    try:
+        bot.remove_webhook()
+        logging.info('GuessMu 3.0 bot started in polling state')
+        bot.polling(none_stop=True)
+    except:
+        logging.fatal("Exception in startPollingMode!", exc_info=True)
+
 if __name__ == '__main__':
     try:
-       # bot.remove_webhook()
-        logging.info('GuessMu 3.0 bot started in polling state')
-        logging.info('token')
-        logging.info(token)
-        logging.info('database')
-        logging.info(database)
-        bot.polling(none_stop=True)
+        mode =  sys.argv[1]
+        print(mode)
+        if mode=="webhook":
+            startWebhookMode()
+        if mode=="polling":
+            startPollingMode()
     except:
         logging.fatal("Exception in __main__ !",exc_info=True)
