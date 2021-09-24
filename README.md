@@ -14,7 +14,11 @@ Messages are being recieved using webhook.
 4. Create a .env file in bot root directory. Put the following parameters there:  
   `TELEGRAM_TOKEN=<your_bot_token>`  
    `DATABASE_URL=postgres://<user>:<password>@<db_host>:<port>/<db_name>`  
-Bot can be run locally in polling state. Code for polling mode can be found in bot.py
+
+The bot can be run both in polling and webhook mode.  
+  `> bot.py [polling|webhook]`  
+Mode parameter is required.
+Procfile is set up to run bot in webhook mode.
 
 
 ### Other info 
