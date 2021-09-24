@@ -153,7 +153,7 @@ def startPollingMode():
 if __name__ == '__main__':
     try:
         mode =  sys.argv[1]
-        print(mode)
+        logging.info("Hi! Mode detected: " + mode)
         if mode=="webhook":
             startWebhookMode()
         if mode=="polling":
