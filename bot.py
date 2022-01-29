@@ -12,7 +12,8 @@ from dotenv import load_dotenv
 load_dotenv()
 token = os.getenv('TELEGRAM_TOKEN', '')
 database = os.getenv('DATABASE_URL', '') 
-webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
+#webhook_url = "https://fathomless-thicket-27571.herokuapp.com/" + token
+webhook_url = os.getenv('WEBHOOK_URL', '')
 
 bot = telebot.TeleBot(token)
 server = Flask(__name__)
