@@ -152,7 +152,7 @@ def startPollingMode():
         logging.fatal("Exception in startPollingMode!", exc_info=True)
 
 if __name__ == '__main__':
-     logging.info("New version deployed!")
+    logging.info("New version deployed!")
     try:
         mode =  sys.argv[1]
         logging.info("Hi! Mode detected: " + mode)
