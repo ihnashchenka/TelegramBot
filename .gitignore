@@ -3,3 +3,7 @@ __pycache__
 *.iml
 music
 .env
+terraform/env.tf
+terraform/.terraform*
+terraform/.terraform/**/*
+terraform/terraform.tfstate*
