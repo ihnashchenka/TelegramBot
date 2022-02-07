@@ -10,17 +10,17 @@ variable "dbname" {
 
 variable "default_telebot_buildpack" {
 
-default = "https://github.com/heroku/heroku-buildpack-python.git"
+  default = "https://github.com/heroku/heroku-buildpack-python.git"
 }
 
 variable "source_code_repo" {
-default = "ihnashchenka/TelegramBot"
+  default = "ihnashchenka/TelegramBot"
 }
 
 variable "source_code_archive_url" {
-default  = "https://github.com/ihnashchenka/TelegramBot/tarball/master"
+  default = "https://github.com/ihnashchenka/TelegramBot/tarball/master"
 }
 
 variable "db_initial_load_dump" {
-default  = "https://github.com/ihnashchenka/TelegramBot/raw/57cca69823634ec29e6e46b9392b987fbef8842e/db/initial_load.dump"
+  default = "https://github.com/ihnashchenka/TelegramBot/raw/57cca69823634ec29e6e46b9392b987fbef8842e/db/initial_load.dump"
 }
