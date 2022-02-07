@@ -52,7 +52,6 @@ locals {
 resource "heroku_config" "env" {
   sensitive_vars = {
     TELEGRAM_TOKEN = var.telegram_token
-   # WEBHOOK_URL    = "https://${heroku_app.telebot.name}.herokuapp.com/${var.telegram_token}"
     WEBHOOK_URL    = local.webhook_url
   }
 }
@@ -66,7 +65,6 @@ resource "heroku_app_config_association" "config" {
 resource "heroku_app_webhook" "telebot_webhook" {
   app_id  = heroku_app.telebot.id
   level   = "notify"
-//  url     = "https://${heroku_app.telebot.name}.herokuapp.com/${var.telegram_token}"
     url = local.webhook_url
   include = ["api:release"]
 }
@@ -90,8 +88,11 @@ resource "herokux_pipeline_github_integration" "github" {
 
 resource "heroku_addon" "database" {
     app = heroku_app.telebot.name
-   # name = "telebot-data"
     plan =  "heroku-postgresql:hobby-dev"
+    
+    provisioner "local-exec" {
+        command = "heroku pg:backups:restore ${var.db_initial_load_dump} DATABASE_URL --app ${heroku_app.telebot.name} --confirm ${heroku_app.telebot.name}"
+    }   
 }
 
 output "heroku_addon_data_basic" {
