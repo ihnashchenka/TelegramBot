@@ -45,11 +45,15 @@ resource "heroku_formation" "bot_instance" {
   depends_on = [heroku_build.telebot_build]
 }
 
+locals {
+    webhook_url = join("",["https://", heroku_app.telebot.name, ".herokuapp.com/", var.telegram_token])
+
+}
 resource "heroku_config" "env" {
   sensitive_vars = {
     TELEGRAM_TOKEN = var.telegram_token
-    DATABASE_URL   = var.database_url
-    WEBHOOK_URL    = "https://${heroku_app.telebot.name}.herokuapp.com/${var.telegram_token}"
+   # WEBHOOK_URL    = "https://${heroku_app.telebot.name}.herokuapp.com/${var.telegram_token}"
+    WEBHOOK_URL    = local.webhook_url
   }
 }
 
@@ -62,7 +66,8 @@ resource "heroku_app_config_association" "config" {
 resource "heroku_app_webhook" "telebot_webhook" {
   app_id  = heroku_app.telebot.id
   level   = "notify"
-  url     = "https://${heroku_app.telebot.name}.herokuapp.com/${var.telegram_token}"
+//  url     = "https://${heroku_app.telebot.name}.herokuapp.com/${var.telegram_token}"
+    url = local.webhook_url
   include = ["api:release"]
 }
 
@@ -83,4 +88,19 @@ resource "herokux_pipeline_github_integration" "github" {
   org_repo    = var.source_code_repo
 }
 
+resource "heroku_addon" "database" {
+    app = heroku_app.telebot.name
+   # name = "telebot-data"
+    plan =  "heroku-postgresql:hobby-dev"
+}
 
+output "heroku_addon_data_basic" {
+  value = [
+    "Created database",
+    "id: ${heroku_addon.database.id}",
+    "name: ${heroku_addon.database.name}",
+    "app: ${heroku_addon.database.app}",
+    "plan: ${heroku_addon.database.plan}",
+    "config_vars: ${join(", ", heroku_addon.database.config_vars)}",
+  ]
+}
